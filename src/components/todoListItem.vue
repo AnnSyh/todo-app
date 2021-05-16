@@ -4,7 +4,7 @@
       .input-block
         input(
           type="checkbox"
-          @change="checkTodo"
+          @change="checkTodoAsComplited"
           :checked="todo.checked"
         ).input
       .title {{todo.name}}
@@ -15,26 +15,28 @@
       ).view ->
     .button(
       type="button"
-      @click="removeTodo"
+      @click="removeExistedTodo"
     ).remove x
 </template>
 <script>
+import {mapMutations} from 'vuex';
 export default {
   props:{
     todo:Object
   },
   methods:{
-    removeTodo() {
-      this.$emit('removeTodo',this.todo.id);
+    ...mapMutations(['removeTodo','checkedTodo']),
+    removeExistedTodo() {
+      this.removeTodo(this.todo.id)
     },
-    checkTodo(e){
+    checkTodoAsComplited(e){
       console.log(e.target.checked);
       const todoItem = {
         ...this.todo,
         checked: e.target.checked
       }
 
-      this.$emit('checkedTodo',todoItem);
+      this.checkedTodo(todoItem);
     }
   }
 }

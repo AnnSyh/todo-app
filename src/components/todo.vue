@@ -5,16 +5,13 @@
       todo-list(
         v-if="todos.length > 0"
         :todos="filteredTodos"
-        @removeTodo="removeTodo"
-        @checkedTodo="checkedTodo"
-        @filterTodos="filterTodos"
       )
 </template>
 
 <script>
 import todoInput from './todoInput';
 import todoList from './todoList';
-import { mapState } from  'vuex';
+import { mapState, mapGetters, mapActions } from  'vuex';
 
 export default {
   data() {
@@ -27,11 +24,22 @@ export default {
     todoInput,
     todoList
   },
+  mounted() {
+    // setTimeout(()=>{
+    //   console.log('setTimeout ',  this.todoById(3));
+    // },6000)
+
+    this.fetchItems();
+  },
+  methods:{
+    ...mapActions(['fetchItems'])
+  },
   computed: {
     ...mapState({
       todos: state => state.todos.todos,
       filter: state => state.todos.filter
     }),
+    ...mapGetters(['todoById']),
     filteredTodos() {
       switch (this.filter) {
         case "all":
@@ -43,25 +51,7 @@ export default {
       }
     }
   },
-  methods: {
-    addTodo(todo) {
-      this.todos.push(todo);
-    },
-    removeTodo(todoId) {
-      // console.log('todo.vue: removeTodo',todoId)
-      this.todos = this.todos.filter(item => {
-        return item.id !== todoId
-      })
-    },
-    checkedTodo(todo) {
-      // console.log('checkedTodo',todo);
-      this.todos = this.todos.map(item => (item.id === todo.id ? todo : item));
-    },
-    filterTodos(filter) {
-      console.log('filter', filter);
-      this.filter = filter;
-    }
-  },
+
 
 }
 </script>
