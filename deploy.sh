@@ -7,7 +7,7 @@ set -e
 rm -rf dist
 
 ## build
-npm run build
+npm yarn build
 
 ## navigate into the build output directory
 cd dist
@@ -21,6 +21,7 @@ git commit -m 'deploy'
 
 ## if you are deploying to https://<USERNAME>.github.io
 git push -f https://github.com/AnnSyh/todo-app.git master:gh-pages
+
 
 ## if you are deploying to https://<USERNAME>.github.io/<REPO>
 # git push -f https://<USERNAME>.github.io/<REPO> master:gh-pages
