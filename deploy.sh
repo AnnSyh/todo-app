@@ -7,7 +7,7 @@ set -e
 rm -rf dist
 
 ## build
-npm yarn build
+yarn build
 
 ## navigate into the build output directory
 cd dist
